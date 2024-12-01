@@ -9,16 +9,16 @@ class RainbowLine extends StatefulWidget {
   final double glowSpread;
   final String text;
   final Function() onTap;
-  const RainbowLine(
-      {Key? key,
-      this.width = 300.0,
-      this.height = 4.0,
-      this.duration = const Duration(seconds: 2),
-      this.glowIntensity = 0.1,
-      this.glowSpread = 10.0,
-      required this.onTap,
-      required this.text})
-      : super(key: key);
+  const RainbowLine({
+    Key? key,
+    this.width = 300.0,
+    this.height = 4.0,
+    this.duration = const Duration(seconds: 2),
+    this.glowIntensity = 0.1,
+    this.glowSpread = 10.0,
+    required this.onTap,
+    required this.text,
+  }) : super(key: key);
 
   @override
   _RainbowLineState createState() => _RainbowLineState();
@@ -126,7 +126,12 @@ class RainbowLinePainter extends CustomPainter {
     final double yOffset = (size.height - height) / 2;
 
     // Create the base rect for the line
-    final Rect baseRect = Rect.fromLTWH(0, yOffset, size.width, 1);
+    final Rect baseRect = Rect.fromLTWH(
+      0,
+      yOffset + height / 4, // Offset the rect to create the upward curve
+      size.width,
+      height / 2, // Reduce the height to create the upward curve
+    );
 
     // Create the larger rect for the glow effect
     final Rect glowRect = Rect.fromLTWH(
@@ -171,7 +176,8 @@ class RainbowLinePainter extends CustomPainter {
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         baseRect,
-        Radius.circular(height / 2),
+        Radius.circular(
+            height / 4), // Reduce the radius to create the upward curve
       ),
       mainPaint,
     );
@@ -185,7 +191,8 @@ class RainbowLinePainter extends CustomPainter {
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         baseRect,
-        Radius.circular(height / 2),
+        Radius.circular(
+            height / 4), // Reduce the radius to create the upward curve
       ),
       highlightPaint,
     );
